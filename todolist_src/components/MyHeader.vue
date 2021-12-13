@@ -13,7 +13,6 @@
 import { nanoid } from "nanoid";
 export default {
   name: "MyHeader",
-  props: ["addTodo"],
   data() {
     return {
       title: "",
@@ -23,7 +22,7 @@ export default {
     add(e) {
       if (!this.title.trim()) return alert("输入有误");
       const todoObj = { id: nanoid(), title: this.title, done: false };
-      this.addTodo(todoObj);
+      this.$emit("addTodo", todoObj);
       this.title = "";
     },
   },

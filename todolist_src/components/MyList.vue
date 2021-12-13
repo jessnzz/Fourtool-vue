@@ -1,12 +1,8 @@
 <template>
   <ul class="todo-main">
-    <MyItem
-      v-for="todoObj in todos"
-      :key="todoObj.id"
-      :todo="todoObj"
-      :checkTodo="checkTodo"
-      :deleteTodo="deleteTodo"
-    />
+    <transition-group name="todo" appear>
+      <MyItem v-for="todoObj in todos" :key="todoObj.id" :todo="todoObj" />
+    </transition-group>
   </ul>
 </template>
 
@@ -15,7 +11,7 @@ import MyItem from "./MyItem.vue";
 export default {
   name: "MyList",
   components: { MyItem },
-  props: ["todos", "checkTodo", "deleteTodo"],
+  props: ["todos"],
 };
 </script>
 
@@ -35,5 +31,19 @@ export default {
   border-radius: 2px;
   padding-left: 5px;
   margin-top: 10px;
+}
+.todo-enter-active {
+  animation: jessn 0.5s linear;
+}
+.todo-leave-active {
+  animation: jessn 0.5s reverse;
+}
+@keyframes jessn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0px);
+  }
 }
 </style>

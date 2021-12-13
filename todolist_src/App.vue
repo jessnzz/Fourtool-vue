@@ -2,16 +2,12 @@
   <div id="root">
     <div class="todo-container">
       <div class="todo-wrap">
-        <MyHeader :addTodo="addTodo" />
-        <MyList
-          :todos="todos"
-          :checkTodo="checkTodo"
-          :deleteTodo="deleteTodo"
-        />
+        <MyHeader @addTodo="addTodo" />
+        <MyList :todos="todos" />
         <MyFooters
           :todos="todos"
-          :checkAllTodo="checkAllTodo"
-          :clearAllDone="clearAllDone"
+          @checkAllTodo="checkAllTodo"
+          @clearAllDone="clearAllDone"
         />
       </div>
     </div>
@@ -40,6 +36,11 @@ export default {
         if (todo.id == id) todo.done = !todo.done;
       });
     },
+    updateTodo(id, title) {
+      this.todos.forEach((todo) => {
+        if (todo.id == id) todo.title = title;
+      });
+    },
     deleteTodo(id) {
       this.todos = this.todos.filter((todo) => todo.id !== id);
     },
@@ -57,6 +58,16 @@ export default {
         localStorage.setItem("todos", JSON.stringify(value));
       },
     },
+  },
+  mounted() {
+    this.$bus.$on("checkTodo", this.checkTodo);
+    this.$bus.$on("deleteTodo", this.deleteTodo);
+    this.$bus.$on("updateTodo", this.updateTodo);
+  },
+  beforeDestroy() {
+    this.$bus.$off("checkTodo");
+    this.$bus.$off("deleteTodo");
+    this.$bus.$off("updateTodo");
   },
 };
 </script>
@@ -90,6 +101,16 @@ body {
 .btn-danger:hover {
   color: #fff;
   background-color: #bd362f;
+}
+.btn-edit {
+  color: #fff;
+  background-color: rgb(4, 187, 4);
+  border: 1px solid rgb(79, 126, 79);
+  margin-right: 5px;
+}
+.btn-edit:hover {
+  color: #fff;
+  background-color: rgb(79, 126, 79);
 }
 
 .btn:focus {
