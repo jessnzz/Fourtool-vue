@@ -1,8 +1,10 @@
-# todilist
-
+# install vue-cli
+```
+npm install -g @vue/cli
+```
 ## Project setup
 ```
-npm install
+npm create hello-world
 ```
 
 ### Compiles and hot-reloads for development
@@ -20,5 +22,3 @@ npm run build
 npm run lint
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
